@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Brain Age Test - Test Your Brain Age | আপনার ব্রেনের বয়স পরীক্ষা করুন</title>
+    <meta name="keywords" content="Brain Age Test, Mental Age Quiz, অরিজিনাল ব্রেন টেস্ট, আপনার মানসিক বয়স জানুন, Personality Test, Cognitive Age Calculator, ব্রেইন এজ টেস্ট বাংলা">
+    <meta name="description" content="Take the ultimate Brain Age Test online with a 20-second timer per question. Discover your mental age and cognitive profile. Designed by Rafid Ahmed.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-solid: #f3f4f6; /* একদম মডার্ন ডিম হোয়াইট / অফ-হোয়াইট ব্যাকগ্রাউন্ড */
+            --card-bg: #ffffff;
+            --primary: #4f46e5; /* মডার্ন ইন্ডিগো প্রাইমারি কালার */
+            --primary-hover: #4338ca;
+            --success: #10b981;
+            --text-color: #0f172a;
+            --light-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            --timer-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-solid);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 750px;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.03);
+            padding: 45px;
+            margin: 20px auto;
+            animation: fadeInScale 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: translateY(20px) scale(0.97); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* কার্ডের ওপর প্রিমিয়াম গ্রেডিয়েন্ট বর্ডার লাইন */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4f46e5, #06b6d4, #10b981);
+        }
+
+        .header-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .header-subtitle-bn {
+            text-align: center;
+            color: #334155;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* Rules / Warning Section Styles */
+        .rules-card {
+            background: #fffbeb;
+            border: 1px solid #fef3c7;
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .rules-title {
+            color: #b45309;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rules-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .rules-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #78350f;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .rules-list li::before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 12px;
+        }
+
+        .start-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        .start-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.5);
+        }
+
+        /* Progress Bar & Timer Header */
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .timer-display {
+            background: #fee2e2;
+            color: var(--timer-color);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulseTimer 1s infinite;
+        }
+
+        @keyframes pulseTimer {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+
+        .progress-container {
+            width: 100%;
+            background: var(--border-color);
+            border-radius: 20px;
+            height: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        .question-card {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 26px;
+            margin-bottom: 25px;
+            animation: slideInCard 0.4s ease;
+        }
+
+        @keyframes slideInCard {
+            from { opacity: 0; transform: translateX(15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 17px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            transition: all 0.25s ease;
+            font-weight: 600;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: #eef2ff;
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -5px rgba(79, 70, 229, 0.15);
+        }
+
+        .option-btn.selected {
+            background: var(--success) !important;
+            color: white !important;
+            border-color: var(--success) !important;
+            box-shadow: 0 8px 20px -5px rgba(16, 185, 129, 0.3);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Result Section Styling */
+        #result-section {
+            text-align: center;
+            animation: popUpResult 0.5s ease;
+        }
+
+        @keyframes popUpResult {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .result-box {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            padding: 35px 25px;
+            border-radius: 22px;
+            margin: 25px 0;
+        }
+
+        .result-box h2 {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .marks-highlight {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .brain-age-card {
+            background: #ffffff;
+            border: 2px dashed #cbd5e1;
+            padding: 25px;
+            border-radius: 18px;
+            margin-top: 15px;
+        }
+
+        .brain-age-card h3 {
+            font-size: 13px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .brain-age-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ef4444;
+            margin-bottom: 12px;
+        }
+
+        .age-description {
+            font-size: 14px;
+            color: #334155;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .restart-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 14px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.4);
+        }
+
+        .restart-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(239, 68, 68, 0.5);
+        }
+
+        /* SEO & Info Section Styling (ফাঁকা জায়গা সুন্দরভাবে পূরণের জন্য) */
+        .seo-info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .seo-info-section h3 {
+            font-size: 15px;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .seo-info-section p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 14px;
+            font-weight: 400;
+        }
+
+        /* Footer Styling */
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        footer span {
+            color: #1e293b;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Rules & Instructions Section (First Screen) -->
+        <div id="rules-section">
+            <h1 class="header-title">🧠 Brain Age Test 🎯</h1>
+            <div class="header-subtitle-bn">আপনার ব্রেনের বয়স পরীক্ষা করুন</div>
+            <p class="subtitle">Welcome! Please read the instructions carefully before starting the test.</p>
+            
+            <div class="rules-card">
+                <div class="rules-title">⚠️ গুরুত্বপূর্ণ সতর্কতা ও নির্দেশাবলী (Rules & Guidelines)</div>
+                <ul class="rules-list">
+                    <li>প্রতিটি প্রশ্নের উত্তর দেওয়ার জন্য আপনি সময় পাবেন **২০ সেকেন্ড (20 Seconds)**।</li>
+                    <li>নির্দিষ্ট সময়ের মধ্যে উত্তর দিতে না পারলে স্বয়ংক্রিয়ভাবে পরবর্তী প্রশ্নে চলে যাবে এবং উক্ত প্রশ্নে কোনো নম্বর যোগ হবে না।</li>
+                    <li>সঠিক ও নির্ভুল ফলাফলের জন্য আপনার স্বতঃস্ফূর্ত এবং প্রথম পছন্দের অপশনটিতে ক্লিক করুন।</li>
+                    <li>টেস্ট চলাকালীন পেজ রিলোড বা ব্যাক করা থেকে বিরত থাকুন।</li>
+                </ul>
+            </div>
+
+            <button class="start-btn" onclick="startQuizProcess()">Start Test Now 🚀</button>
+        </div>
+
+        <!-- Quiz Section (Hidden Initially) -->
+        <div id="quiz-section" class="hidden">
+            <h1 class="header-title">🧠 Brain Age Test 🎯</h1>
+            <div class="header-subtitle-bn">আপনার ব্রেনের বয়স পরীক্ষা করুন</div>
+            <p class="subtitle">Answer quickly before the timer runs out!</p>
+            
+            <div class="progress-info">
+                <span id="progress-text">Question 1 of 10</span>
+                <div class="timer-display">⏳ Time Left: <span id="time-remaining">20</span>s</div>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <div id="questions-container">
+                <!-- Dynamic Question Container -->
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="result-section" class="hidden">
+            <h1 class="header-title">🎉 Test Completed! 🏆</h1>
+            <div class="result-box">
+                <h2>Total Score</h2>
+                <div class="marks-highlight" id="total-marks">0</div>
+                
+                <div class="brain-age-card">
+                    <h3>Your Mental Brain Age:</h3>
+                    <div class="brain-age-value" id="brain-age">Calculating...</div>
+                    <p class="age-description" id="age-description"></p>
+                </div>
+            </div>
+            <button class="restart-btn" onclick="restartQuiz()">Restart Test 🔄</button>
+        </div>
+
+        <!-- SEO & About Brain Age Test Information -->
+        <div class="seo-info-section">
+            <h3>💡 ব্রেন এজ টেস্ট (Brain Age Test) সম্পর্কে কিছু কথা</h3>
+            <p>আমাদের মানসিক বয়স বা ব্রেন এজ টেস্টটি আপনার চিন্তাভাবনা, বুদ্ধিমত্তা এবং ব্যক্তিত্বের ওপর ভিত্তি করে তৈরি করা হয়েছে। দৈনন্দিন পছন্দ-অপছন্দ এবং মানসিক আচরণের মাধ্যমে একজন মানুষের মস্তিষ্কের বয়স তার প্রকৃত বয়স থেকে আলাদা হতে পারে।</p>
+            <p>এই ইন্টারেক্টিভ কুইজটিতে ২০ সেকেন্ডের টাইমপদ্ধতি যুক্ত করা হয়েছে যাতে আপনার সাবকনসিয়াস বা অবচেতন মনের দ্রুত সিদ্ধান্ত নেওয়ার ক্ষমতা সঠিকভাবে মূল্যায়ন করা যায়। আপনার বন্ধুদের সাথে টেস্টটি শেয়ার করুন এবং তাদের মানসিক বয়স কত তা জেনে নিন!</p>
+        </div>
+    </div>
+
+    <!-- Footer Section with Rafid Ahmed -->
+    <footer>
+        &copy; 2026 BRAIN AGE TEST | DEVELOPED BY RAFID AHAMMED    </footer>
+
+    <script>
+        const quizData = [
+            {
+                question: "১. আপনার কোন ধরণের রঙ পছন্দ? 🎨",
+                options: [
+                    { text: "কালাচে বা ধূসর প্রকৃতির রঙ", marks: 20 },
+                    { text: "উজ্জ্বল বা গাঢ় রঙ", marks: 30 },
+                    { text: "লালাচে বা অনেক রঙ মেশানো", marks: 40 },
+                    { text: "কিছুটা অনুজ্জ্বল ধরণের রঙ", marks: 10 }
+                ]
+            },
+            {
+                question: "২. আপনি কোন ধরণের খাবার খেতে আপনি পছন্দ করেন? 🍽️",
+                options: [
+                    { text: "সমুদ্রের খাবার", marks: 10 },
+                    { text: "রেস্টুরেন্টের খাবার", marks: 30 },
+                    { text: "ফাস্ট ফুড", marks: 40 },
+                    { text: "সুপ", marks: 20 }
+                ]
+            },
+            {
+                question: "৩. নিচের কোন পানীয়টি আপনার পছন্দ? 🥤",
+                options: [
+                    { text: "কোল্ড ড্রিংকস", marks: 40 },
+                    { text: "বিয়ার", marks: 20 },
+                    { text: "রেড ওয়াইন", marks: 10 },
+                    { text: "ফলের জুস", marks: 30 }
+                ]
+            },
+            {
+                question: "৪. ধরুন আপনি টিভি অন করলেন, চার ধরণের চ্যানেলে নিচের চার ধরণের অনুষ্ঠান চলছে। আপনি কোনটি দেখবেন? 📺",
+                options: [
+                    { text: "নিউজ", marks: 10 },
+                    { text: "কার্টুন", marks: 40 },
+                    { text: "অ্যাকশন বা কমেডি জাতীয় মুভি", marks: 30 },
+                    { text: "ড্রামা বা থ্রিলার জাতীয় কিছু", marks: 20 }
+                ]
+            },
+            {
+                question: "৫. চকলেটের প্রতি আপনার মনোভাব কেমন? 🍫",
+                options: [
+                    { text: "আমি এটা খুব পছন্দ করি", marks: 40 },
+                    { text: "এটি খেতে ভালোবাসি", marks: 30 },
+                    { text: "চকলেট ছোট বাচ্চাদের জন্য", marks: 20 },
+                    { text: "এটি স্বাস্থ্যের জন্য ভালো নয় তাই আমি এটা একদমই পছন্দ করি না", marks: 10 }
+                ]
+            },
+            {
+                question: "৬. ফেসবুক বা টুইটার বা সোশ্যাল মিডিয়ার প্রতি আপনার মনোভাব কেমন? 📱",
+                options: [
+                    { text: "যোগাযোগের অনেক ভালো উপায়", marks: 30 },
+                    { text: "এসব ব্যবহার করা সময়ের অপচয় ছাড়া আর কিছুই না", marks: 20 },
+                    { text: "এসব ব্যবহার করা ছাড়া একদমই থাকতে পারি না", marks: 40 },
+                    { text: "দ্বিধাগ্রস্ত আছি", marks: 10 }
+                ]
+            },
+            {
+                question: "৭. স্মার্টফোন নিয়ে আপনার মন্তব্য কি? 📲",
+                options: [
+                    { text: "অনেক উপকারী একটা জিনিস", marks: 30 },
+                    { text: "অনেক বেশি দরকারী", marks: 40 },
+                    { text: "কিছুটা কনফিউসিং ব্যাপার", marks: 10 },
+                    { text: "এটি একদিকে যেমন দামি তেমনি অপ্রয়োজনীয়", marks: 20 }
+                ]
+            },
+            {
+                question: "৮. আপনি আপনার জন্মদিন কিভাবে পালন করেন? 🎂",
+                options: [
+                    { text: "এটি বাচ্চাদের জন্য", marks: 10 },
+                    { text: "পরিবারের সবাই মিলে ভালোভাবে খাওয়া দাওয়া করি", marks: 20 },
+                    { text: "পার্টি করা বন্ধু বান্ধব মিলে", marks: 30 },
+                    { text: "জন্মদিন কেক কেটে উদযাপন করা", marks: 40 }
+                ]
+            },
+            {
+                question: "৯. ক্লাসিক্যাল সঙ্গীতের প্রতি আপনার মনোভাব কেমন? 🎵",
+                options: [
+                    { text: "এটি অনেক প্রশান্তিকর", marks: 20 },
+                    { text: "আমি মোটেও পছন্দ করিনা", marks: 40 },
+                    { text: "আমি অনেক পছন্দ করি", marks: 10 },
+                    { text: "শুনতে ভালো লাগে", marks: 30 }
+                ]
+            },
+            {
+                question: "১০. আপনার কাছে আদর্শ ছুটির দিনের সংজ্ঞা কি? 🏖️",
+                options: [
+                    { text: "পার্কে ঘুরতে যাওয়া", marks: 40 },
+                    { text: "সমুদ্র দেখতে যাওয়া", marks: 30 },
+                    { text: "ভ্রমণ করা", marks: 20 },
+                    { text: "বিভিন্ন সভ্যতার সাথে পরিচিত হওয়া", marks: 10 }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let timerInterval;
+        let timeLeft = 20;
+
+        function startQuizProcess() {
+            document.getElementById("rules-section").classList.add("hidden");
+            document.getElementById("quiz-section").classList.remove("hidden");
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            loadCurrentQuestion();
+        }
+
+        function loadCurrentQuestion() {
+            clearInterval(timerInterval);
+            if (currentQuestionIndex >= quizData.length) {
+                submitQuiz();
+                return;
+            }
+
+            timeLeft = 20;
+            document.getElementById("time-remaining").innerText = timeLeft;
+
+            const container = document.getElementById("questions-container");
+            container.innerHTML = "";
+
+            let q = quizData[currentQuestionIndex];
+            let card = document.createElement("div");
+            card.className = "question-card";
+
+            let title = document.createElement("div");
+            title.className = "question-title";
+            title.innerText = q.question;
+            card.appendChild(title);
+
+            let grid = document.createElement("div");
+            grid.className = "options-grid";
+
+            q.options.forEach((opt, oIndex) => {
+                let btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.innerHTML = `<span>${opt.text}</span>`;
+                btn.onclick = () => selectOption(oIndex, btn, grid);
+                grid.appendChild(btn);
+            });
+
+            card.appendChild(grid);
+            container.appendChild(card);
+            updateProgress();
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById("time-remaining").innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    userAnswers[currentQuestionIndex] = 0; 
+                    currentQuestionIndex++;
+                    loadCurrentQuestion();
+                }
+            }, 1000);
+        }
+
+        function selectOption(oIndex, selectedBtn, grid) {
+            clearInterval(timerInterval);
+            const buttons = grid.getElementsByClassName("option-btn");
+            for (let btn of buttons) {
+                btn.style.pointerEvents = "none";
+                btn.style.opacity = "0.7";
+            }
+
+            selectedBtn.classList.add("selected");
+            selectedBtn.style.opacity = "1";
+
+            userAnswers[currentQuestionIndex] = quizData[currentQuestionIndex].options[oIndex].marks;
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadCurrentQuestion();
+            }, 600);
+        }
+
+        function updateProgress() {
+            const progressPercentage = Math.round((currentQuestionIndex / quizData.length) * 100);
+            document.getElementById("progress-text").innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            document.getElementById("progress-percent").innerText = `${progressPercentage}%`;
+            document.getElementById("progress-bar").style.width = progressPercentage + "%";
+        }
+
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            let totalMarks = 0;
+            for (let key in userAnswers) {
+                totalMarks += userAnswers[key];
+            }
+
+            let brainAgeText = "";
+            let description = "";
+
+            if (totalMarks >= 350 && totalMarks <= 400) {
+                brainAgeText = "৯ বছর";
+                description = "আপনার মস্তিষ্ক অত্যন্ত কচি, প্রাণবন্ত ও শিশুর মতো সরল। আপনি জীবনের প্রতিটি মুহূর্ত আনন্দ ও কৌতূহলের সাথে উপভোগ করেন, ঠিক যেমনটি ৯ বছরের শিশুদের মধ্যে দেখা যায়।";
+            } else if (totalMarks >= 300 && totalMarks <= 340) {
+                brainAgeText = "১৬ বছর";
+                description = "আপনার মস্তিষ্ক কিশোরসুলভ ও উদ্দীপ্ত। আপনার চিন্তাভাবনায় এক ধরণের তরতাজা ভাব এবং নতুন কিছু জানার দারুণ স্পৃহা কাজ করে, যা ১৬ বছরের কিশোর মনের বৈশিষ্ট্য।";
+            } else if (totalMarks >= 250 && totalMarks <= 290) {
+                brainAgeText = "১৬ থেকে ২১ বছর";
+                description = "আপনার মন তরুণ, উদ্যমী ও আধুনিক। আপনি স্বপ্ন দেখতে ভালোবাসেন এবং চারপাশের পরিবর্তনগুলোর সাথে নিজেকে খুব দ্রুত মানিয়ে নিতে পারেন।";
+            } else if (totalMarks >= 200 && totalMarks <= 240) {
+                brainAgeText = "২১ থেকে ২৯ বছর";
+                description = "আপনার চিন্তাভাবনা একজন যুবকের মতো ভারসাম্যপূর্ণ। আপনি আনন্দ এবং দায়িত্ব—উভয়কেই সমান গুরুত্ব দিয়ে জীবনকে সামনে এগিয়ে নিয়ে যাচ্ছেন।";
+            } else if (totalMarks >= 150 && totalMarks <= 190) {
+                brainAgeText = "২৯ থেকে ৪৮ বছর";
+                description = "আপনার মানসিক বয়স বেশ পরিপক্ব। আপনি অত্যন্ত দায়িত্বশীল, চিন্তাশীল এবং যেকোনো পরিস্থিতিতে বিচক্ষণ সিদ্ধান্ত নিতে অভ্যস্ত।";
+            } else if (totalMarks >= 100 && totalMarks <= 140) {
+                brainAgeText = "৪৮ বছরের উপরে";
+                description = "আপনার মস্তিষ্ক অত্যন্ত প্রাজ্ঞ, গম্ভীর ও ম্যাচিউরড। আপনার চিন্তাভাবনায় গভীর প্রজ্ঞা, ধৈর্য এবং জীবনের দীর্ঘ অভিজ্ঞতার ছাপ স্পষ্টভাবে প্রকাশ পায়।";
+            } else {
+                brainAgeText = "বিশেষ মানসিক বয়স";
+                description = "আপনার স্কোরের ভিত্তিতে আপনার চিন্তাভাবনা বেশ অনন্য ও চমৎকার বৈশিষ্ট্যের অধিকারী!";
+            }
+
+            document.getElementById("quiz-section").classList.add("hidden");
+            document.getElementById("result-section").classList.remove("hidden");
+
+            document.getElementById("total-marks").innerText = totalMarks + " Marks";
+            document.getElementById("brain-age").innerText = brainAgeText;
+            document.getElementById("age-description").innerText = description;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            document.getElementById("result-section").classList.add("hidden");
+            document.getElementById("rules-section").classList.remove("hidden");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
